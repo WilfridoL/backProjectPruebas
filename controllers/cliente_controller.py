@@ -4,4 +4,4 @@ from services.cliente_services import listado_cliente
 
 def cnlistado_cliente():
     data=listado_cliente()
-    print(data)
+    return jsonify(data)
