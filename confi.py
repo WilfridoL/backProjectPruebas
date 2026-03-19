@@ -1,9 +1,11 @@
 import os
 from dotenv import load_dotenv
-load_dotenv() #carga las valiables de entorno
+
+load_dotenv()
+
 class Config:
-    mysgl_host = os.getenv('MYSQL_HOST')
-    mysql_user = os.getenv('MYSQL_USER')
-    mysql_password = os.getenv('MYSQL_PASSWORD')
-    mysql_db = os.getenv('MYSQL_DB')
-    mysql_port = os.getenv('MYSQL_PORT')
+    MYSQL_HOST = os.getenv('MYSQL_HOST')
+    MYSQL_USER = os.getenv('MYSQL_USER')
+    MYSQL_PASSWORD = os.getenv('MYSQL_PASSWORD')
+    MYSQL_DB = os.getenv('MYSQL_DB')
+    MYSQL_PORT = int(os.getenv('MYSQL_PORT'))
