@@ -1,5 +1,5 @@
-from flack import current_app
-from models.factura import Factura
+from flask import current_app
+from models.factura_model import Factura
 def listado_factura():
     c=current_app.msql.connection.cursor()
     sql="SELECT * FROM factura"

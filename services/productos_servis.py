@@ -1,4 +1,4 @@
-from flack import current_app
+from flask import current_app
 from models.producto_model import producto
 def listado_productos():
     c=current_app.msql.connection.cursor()
