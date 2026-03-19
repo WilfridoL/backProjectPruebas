@@ -4,3 +4,4 @@ from services.usuario_services import listarUsuario
 def cntListadoUsuario():
     datos = listarUsuario()
     print(datos)
+    return jsonify(datos)

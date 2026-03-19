@@ -1,5 +1,5 @@
 from  flask import jsonify, request
-from models.factura_services import listado_productos, buscarXid
+from services.productos_services import listado_productos
 
 
 def cnlistado_productos():
