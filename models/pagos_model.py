@@ -1,11 +1,11 @@
 from datetime import datetime
 
 class Det_venta:
-    def __init__(self, id, idven, monto, est):
+    def __init__(self, id, idven, monto, pagFec,  est):
         self.pagId = id
         self.pagVenId = idven
         self.pagMon = monto
-        self.pagFec = datetime.now().strftime("%d/%m/%Y")
+        self.pagFec = pagFec
         self.pagEst = est
 
     def toDic(self):

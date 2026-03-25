@@ -1,26 +1,16 @@
 class det_pedido:
-    def __init__(self ,detPedId,detMedPec,detMedCad,detMedCin,detMedLarMan,detMedAncEsp,detMedConMus,detMedLarPan,pedObs,codigoFk,pedIdFk):
+    def __init__(self ,detPedId, pedObs, pedIdFk, cantidad, medidas=None, proIdFk = None):
         self.detPedId = detPedId
-        self.detMedPec = detMedPec
-        self.detMedCad = detMedCad
-        self.detMedCin = detMedCin
-        self.detMedLarMan = detMedLarMan
-        self.detMedAncEsp = detMedAncEsp
-        self.detMedConMus = detMedConMus
-        self.detMedLarPan = detMedLarPan
         self.pedObs = pedObs
-        self.codigoFk = codigoFk
+        self.proIdFk = proIdFk
         self.pedIdFk = pedIdFk
-    def toDic(self):        return {
-            'detPedId': self.detPedId,
-            'detMedPec': self.detMedPec,
-            'detMedCad': self.detMedCad,
-            'detMedCin': self.detMedCin,
-            'detMedLarMan': self.detMedLarMan,
-            'detMedAncEsp': self.detMedAncEsp,
-            'detMedConMus': self.detMedConMus,
-            'detMedLarPan': self.detMedLarPan,
-            'pedObs': self.pedObs,
-            'codigoFk': self.codigoFk,
-            'pedIdFk': self.pedIdFk
-        }   
+        self.detPedCant = cantidad
+        self.medidas = medidas if medidas else []
+
+    def toDic(self):
+        return {
+            "detPedId": self.detPedId,
+            "proIdFk": self.proIdFk,
+            "detPedCant": self.detPedCant,
+            "medidas": [m.toDic() for m in self.medidas]
+        }
