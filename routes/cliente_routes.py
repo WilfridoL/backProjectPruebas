@@ -5,4 +5,4 @@ cliente_bp = Blueprint("cliente", __name__)
 
 @cliente_bp.route('/')
 def listado():
-    return cnlistado_cliente
+    return cnlistado_cliente()
