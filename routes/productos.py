@@ -1,7 +1,8 @@
 from flask import Blueprint
 from controllers.productos_controller import cnlistado_productos
 
-productos_bp = Blueprint('productos', __name__)
-@productos_bp.route('/productos')
-def listado_productos():
+producto_bp = Blueprint("productos", __name__)
+
+@producto_bp.route('/')
+def listado():
     return cnlistado_productos()

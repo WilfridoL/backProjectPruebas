@@ -1,19 +1,32 @@
 class Producto:
-    def __init__(self, id, nom, stock, preUni, desc=None, gen=None, catFk=None,
-                 tipPreFk=None, tipPro=None, proUmbMin=None, tall=None, pro=None):
+    def __init__(self, 
+    proId, 
+    proNom, 
+    proStock, 
+    proPreUni, 
+    proEst,
+    proDesc=None, 
+    proGen=None, 
+    proCatFk=None,
+    proTipPreFk=None, 
+    proTipPro=None,
+    proUmbMin=None, 
+    proTallFk=None, 
+    proProv=None):
 
-        self.proId = id
-        self.proNom = nom
-        self.proStock = stock
-        self.proPreUni = preUni
-        self.proDesc = desc
-        self.proGen = gen
-        self.proCatFk = catFk
-        self.proTipPreFk = tipPreFk
-        self.proTipPro = tipPro
+        self.proId = proId
+        self.proNom = proNom
+        self.proStock = proStock
+        self.proPreUni = proPreUni
+        self.proDesc = proDesc
+        self.proGen = proGen
+        self.proCatFk = proCatFk
+        self.proTipPreFk = proTipPreFk
+        self.proTipPro = proTipPro
         self.proUmbMin = proUmbMin
-        self.proTallFk = tall
-        self.proProv = pro
+        self.proTallFk = proTallFk
+        self.proProv = proProv,
+        self.proEst = proEst
 
     def toDic(self):
         return {
@@ -28,5 +41,6 @@ class Producto:
             "proTipPro": self.proTipPro,
             "proUmbMin": self.proUmbMin,
             "proTallFk": self.proTallFk,
-            "proProv": self.proProv
+            "proProv": self.proProv,
+            "proEst": self.proEst
         }
