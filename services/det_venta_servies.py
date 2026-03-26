@@ -1,5 +1,5 @@
 from flask import current_app
-from models.det_venta_model import DetVenta
+from models.det_venta_model import Det_venta
 
 def listado_det_venta():
     c = current_app.mysql.connection.cursor()
@@ -9,7 +9,7 @@ def listado_det_venta():
     
     d = []
     for p in data:
-        obj = DetVenta(
+        obj = Det_venta(
             detVenId=p[0],
             idVenta=p[1],
             idProFk=p[2],

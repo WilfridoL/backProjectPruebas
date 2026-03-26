@@ -1,9 +1,8 @@
 from flask import Blueprint, jsonify
-from services.proveedor_service import listado_proveedor
+from controllers.proveedores_controller import cnlistado_proveedores
 
 proveedor_bp = Blueprint('proveedor', __name__)
 
-@proveedor_bp.route('/proveedores', methods=['GET'])
+@proveedor_bp.route('/', methods=['GET'])
 def get_proveedores():
-    data = listado_proveedor()
-    return jsonify(data)
+    return cnlistado_proveedores()

@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from services.det_venta_service import listado_det_venta
+from services.det_venta_servies import listado_det_venta
 
 det_venta_bp = Blueprint('det_venta', __name__)
 

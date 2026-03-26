@@ -1,5 +1,5 @@
 from flask import current_app
-from models.movimiento_model import Movimiento
+from models.movimientos_model import movimientos
 
 def listado_movimientos():
     c = current_app.mysql.connection.cursor()
@@ -9,7 +9,7 @@ def listado_movimientos():
     
     d = []
     for p in data:
-        obj = Movimiento(
+        obj = movimientos(
             idMov=p[0],
             tipo=p[1],
             cantidad=p[2],

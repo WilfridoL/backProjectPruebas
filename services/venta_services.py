@@ -1,5 +1,5 @@
 from flask import current_app
-from models.venta_model import Venta
+from models.ventas_model import Ventas
 
 def listado_ventas():
     c = current_app.mysql.connection.cursor()
@@ -9,7 +9,7 @@ def listado_ventas():
     
     d = []
     for p in data:
-        obj = Venta(
+        obj = Ventas(
             venID=p[0],
             venFec=p[1],
             venDesc=p[2],
