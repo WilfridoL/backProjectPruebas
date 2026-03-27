@@ -25,7 +25,6 @@ class pedidos:
         self.pedTipPedFk = pedTipPedFk
         self.pedRecor = pedRecor
 
-        # ✅ listas correctas
         self.detalles = detalles if detalles else []
         self.fotos = fotos if fotos else []
 
@@ -42,7 +41,6 @@ class pedidos:
             'pedTipPedFk': self.pedTipPedFk,
             'pedRecor': self.pedRecor,
 
-            # 🔽 relaciones al final (más limpio)
             "detalles": [d.toDic() for d in self.detalles],
             "fotos": [f.toDic() for f in self.fotos]
         }
