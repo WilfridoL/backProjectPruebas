@@ -22,3 +22,24 @@ def listado_cliente():
         ).toDic()
         d.append(obj)
     return d
+
+def agregar_cliente(
+    id,
+    nom,
+    ape,
+    tel,
+    usuId,
+    tel2 = None,
+    corr = None,
+    dir = None,
+):
+    c = current_app.mysql.connection.cursor()
+    sql = """
+    INSERT INTO cliente (cliId, cliNom, cliApe, cliTel, cliTel2, cliCorr, cliDir, usuIdFk)
+    VALUE (%s, %s, %s, %s, %s, %s, %s, %s) 
+    """
+
+    c.execute(sql, id, nom, ape, tel, tel2, corr, dir, usuId)
+    current_app.mysql.connection.commit()
+    c.close()
+
