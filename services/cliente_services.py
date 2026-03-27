@@ -39,7 +39,7 @@ def agregar_cliente(
     VALUE (%s, %s, %s, %s, %s, %s, %s, %s) 
     """
 
-    c.execute(sql, id, nom, ape, tel, tel2, corr, dir, usuId)
+    c.execute(sql, (id, nom, ape, tel, tel2, corr, dir, usuId))
     current_app.mysql.connection.commit()
     c.close()
 
