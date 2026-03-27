@@ -13,7 +13,7 @@ class Ventas:
 
     def toDic(self):
         return {
-            "venId": self.venid,
+            "venId": self.venId,
             "venDesc": self.venDesc,
             "estadoPago": self.estadoPago,
             "venTotal": self.venTotal,
@@ -21,3 +21,4 @@ class Ventas:
             "usuFkID": self.usuFkID,
             "pedIdFk": self.pedIdFk
         }
+    
