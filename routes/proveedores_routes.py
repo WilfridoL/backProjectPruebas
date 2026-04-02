@@ -1,8 +1,14 @@
-from flask import Blueprint, jsonify
-from controllers.proveedores_controller import cnlistado_proveedores
+from flask import Blueprint
+from controllers.proveedor_controller import (
+    cnlistado_proveedores,
+    cncrear_proveedor,
+    cneliminar_proveedor,
+    cnactualizar_proveedor
+)
 
-proveedor_bp = Blueprint('proveedor', __name__)
+proveedor_bp = Blueprint('proveedor_bp', __name__)
 
-@proveedor_bp.route('/', methods=['GET'])
-def get_proveedores():
-    return cnlistado_proveedores()
+proveedor_bp.route('/proveedores', methods=['GET'])(cnlistado_proveedores)
+proveedor_bp.route('/proveedores', methods=['POST'])(cncrear_proveedor)
+proveedor_bp.route('/proveedores/<string:id>', methods=['DELETE'])(cneliminar_proveedor)
+proveedor_bp.route('/proveedores/<string:id>', methods=['PUT'])(cnactualizar_proveedor)
