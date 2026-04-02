@@ -7,7 +7,6 @@ from models.pedido_foto_model import Foto_Pedido
 def listarPedidos():
     c = current_app.mysql.connection.cursor()
 
-    # 1️⃣ pedidos
     c.execute("SELECT * FROM pedidos")
     pedidos_db = c.fetchall()
 
@@ -44,7 +43,7 @@ def listarPedidos():
         for d in detalles_db:
             detPedId = d[0]
             print(d[1])
-            # 3️⃣ medidas del detalle
+            
             c.execute("""
                 SELECT m.medId, m.medNom, dm.detPedMedVal
                 FROM detPed_Med dm

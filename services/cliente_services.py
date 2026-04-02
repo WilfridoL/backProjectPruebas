@@ -29,91 +29,29 @@ def listado_clientes():
     return d
 
 
-# =====================================================
-# 🔹 CREAR CLIENTE
-# =====================================================
-def crear_cliente(data):
+def listado_cliente():
+    # compatibilidad con variantes previas
+    return listado_clientes()
+
+
+def agregar_cliente(cliId, cliNom, cliApe, cliTel, usuId):
     try:
         c = current_app.mysql.connection.cursor()
-
         sql = """
-        INSERT INTO cliente 
-        (cliId, cliNom, cliApe, cliTel, cliTel2, cliCorr, cliDir, usuIdFk, cliEst)
-        VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        INSERT INTO cliente (cliId, cliNom, cliApe, cliTel, usuIdFk, cliEst)
+        VALUES (%s, %s, %s, %s, %s, %s)
         """
-
         valores = (
-            data['cliId'],
-            data['cliNom'],
-            data['cliApe'],
-            data['cliTel'],
-            data.get('cliTel2'),
-            data.get('cliCorr'),
-            data.get('cliDir'),
-            data['usuIdFk'],
-            data.get('cliEst', 1)
+            cliId,
+            cliNom,
+            cliApe,
+            cliTel,
+            usuId,
+            1
         )
-
         c.execute(sql, valores)
         current_app.mysql.connection.commit()
-
         return True
-
-    except Exception as e:
-        print(e)
-        return False
-
-
-# =====================================================
-# 🔹 ELIMINAR CLIENTE (LÓGICO)
-# =====================================================
-def eliminar_cliente(id):
-    try:
-        c = current_app.mysql.connection.cursor()
-
-        # 🔥 Eliminación lógica (mejor que borrar)
-        sql = "UPDATE cliente SET cliEst = 2 WHERE cliId = %s"
-        c.execute(sql, (id,))
-
-        current_app.mysql.connection.commit()
-
-        return True
-
-    except Exception as e:
-        print(e)
-        return False
-
-
-# =====================================================
-# 🔹 ACTUALIZAR CLIENTE
-# =====================================================
-def actualizar_cliente(id, data):
-    try:
-        c = current_app.mysql.connection.cursor()
-
-        sql = """
-        UPDATE cliente 
-        SET cliNom=%s, cliApe=%s, cliTel=%s, cliTel2=%s,
-            cliCorr=%s, cliDir=%s, usuIdFk=%s
-        WHERE cliId=%s
-        """
-
-        valores = (
-            data['cliNom'],
-            data['cliApe'],
-            data['cliTel'],
-            data.get('cliTel2'),
-            data.get('cliCorr'),
-            data.get('cliDir'),
-            data['usuIdFk'],
-            id
-        )
-
-        c.execute(sql, valores)
-        current_app.mysql.connection.commit()
-
-        return True
-
     except Exception as e:
         print(e)
         return False
