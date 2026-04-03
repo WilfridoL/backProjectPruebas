@@ -85,3 +85,32 @@ def listarPedidos():
         resultado.append(pedido_obj)
 
     return resultado
+
+
+def regPedidos(
+        id,
+        id_cliente,
+        tipo_pedido,
+        fecha_estimada = None,
+        dias_recordatorio = None,
+        precio_total_estimado = None,
+        observacion = None
+):
+
+    c = current_app.mysql.connection.cursor()
+    sql = """
+    INSERT INTO pedidos (pedId, pedCliIdFk, pedFecIng, pedFecEst, pedObs, pedTolEst, pedTipPed, pedRecor)
+    VALUE (%s, %s, NOW(), %s, %s, %s, %s, %s) 
+    """
+
+    c.execute(sql, (
+        id,
+        id_cliente,
+        fecha_estimada,
+        observacion,
+        precio_total_estimado,
+        tipo_pedido,
+        dias_recordatorio
+    ))
+    current_app.mysql.connection.commit()
+    c.close()

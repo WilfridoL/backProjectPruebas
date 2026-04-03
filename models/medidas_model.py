@@ -6,9 +6,11 @@ class Medidas:
         self.medVal = medVal
 
     def toDic(self):
-        return {
+        return self.clean_dict({
             "medId": self.medId,
             "medNom": self.medNom,
             "medDesc": self.medDesc,
             "medVal": self.medVal
-        }
+        })
+    def clean_dict(self, data):
+         return {k: v for k, v in data.items() if v is not None}
