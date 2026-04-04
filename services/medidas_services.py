@@ -17,3 +17,13 @@ def regMedidaPedido(
   ))
   current_app.mysql.connection.commit()
   c.close()
+
+def eliminarMedidas(id):
+    c = current_app.mysql.connection.cursor()
+    c.execute("""
+    DELETE FROM detPed_Med
+    WHERE  detPedIdFk = %s
+    """, (id,))
+    current_app.mysql.connection.commit()
+    c.close()
+

@@ -1,5 +1,5 @@
 from flask import jsonify, request
-from services.pedido_services import listarPedidos, regPedidos
+from services.pedido_services import listarPedidos, regPedidos, delPedido
 
 def cntListadopedido():
     datos = listarPedidos()
@@ -27,7 +27,7 @@ def cntRegistrarPedido ():
     tipo_pedido = data["tipo_pedido"]
 
     fecha_estimada = data.get("fecha_estimada")
-    dias_recordatorio = data.get("dias_recordatorio")
+    dias_recordatorio = data.get("dias_recordatorio") or 3
     precio_total_estimado = data.get("precio_total_estimado")
     observacion = data.get("observacion")
 
@@ -45,3 +45,6 @@ def cntRegistrarPedido ():
         "message": "registro con exito",
         "data": data
     })
+
+def cntCancelarPedido(id):
+    return delPedido(id)

@@ -1,15 +1,13 @@
 from flask import jsonify, request
-from services.det_pedido_services import regDetallePedido
+from services.det_pedido_services import regDetallePedido, deleteDetPedido
 
 def cnRegistroDetalles(id):
     data = request.json
 
-    # 🔒 Validar JSON
-    if not data:
+    if not data: # validar si el JSON no trae ningun dato
         return jsonify({"error": "Se requiere un body en formato JSON"}), 400
 
-    # 🔒 Campos obligatorios
-    campos_obligatorios = ["cantidad", "precio", "nombre"]
+    campos_obligatorios = ["cantidad", "precio", "nombre"] #  Campos obligatorios
 
     faltantes = [c for c in campos_obligatorios if c not in data or data[c] is None]
 
@@ -20,10 +18,10 @@ def cnRegistroDetalles(id):
         }), 400
 
     try:
-        # ✅ Llamar al servicio
+        #  Llamar al servicio
         respuesta = regDetallePedido(
-            id=data.get("id"),  # o puedes generarlo
-            id_pedido=id,       # 👈 viene de la URL /pedidos/<id>/detalles
+            id=data.get("id"), 
+            id_pedido=id,       
             cantidad=data["cantidad"],
             precio=data["precio"],
             nombre=data["nombre"],
@@ -42,3 +40,6 @@ def cnRegistroDetalles(id):
         return jsonify({
             "error": str(e)
         }), 500
+
+def cnDelete(id):
+    return jsonify(deleteDetPedido(id))

@@ -114,3 +114,28 @@ def regPedidos(
     ))
     current_app.mysql.connection.commit()
     c.close()
+
+def delPedido(id):
+    conect = current_app.mysql.connection
+    c = conect.cursor()
+    try:
+        # cambia el estado del pedido a cancelado
+        sql_pedido = """
+        UPDATE pedidos SET
+        pedEst = 'CANCELADO'
+        WHERE pedId = %s
+        """
+        
+        c.execute(sql_pedido, (id,))
+
+        conect.commit()
+
+        return {
+            "message": "Se cancelo el pedido con exito"
+        }
+    except Exception as e:
+        conect.rollback()
+        return {"error": str(e)}
+    finally:
+        c.close()
+    

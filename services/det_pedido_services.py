@@ -1,5 +1,5 @@
 from flask import current_app
-from services.medidas_services import regMedidaPedido
+from services.medidas_services import regMedidaPedido,  eliminarMedidas
 
 def regDetallePedido(
     id,              # id del detalle
@@ -16,7 +16,6 @@ def regDetallePedido(
     c = conn.cursor()
 
     try:
-        # 🔥 1. Generar ID tipo PR002
         c.execute("SELECT proId FROM productos ORDER BY proId DESC LIMIT 1;")
         ultimo = c.fetchone()
         if ultimo:
@@ -24,8 +23,8 @@ def regDetallePedido(
             nuevo_num = num + 1
         else:
             nuevo_num = 1
-        proId = f"PR{str(nuevo_num).zfill(3)}"
-        # 🔥 2. Insertar producto
+        proId = f"PR{str(nuevo_num).zfill(3)}" # genera Id del nuevo producto
+        #  Insertar producto
         sql_producto = """
         INSERT INTO productos (
             proId, proNom, proStock, proPreUni, 
@@ -42,10 +41,10 @@ def regDetallePedido(
             tipo_prenda,
             talla,
             'PERSONALIZADO',
-            3                   # estado por defecto
+            3                   # estado inanctivo 
         ))
 
-        # 🔥 3. Insertar detalle del pedido
+        # Insertar detalle del pedido
         sql_detalle = """
         INSERT INTO det_pedido (
             detPedId, pedIdFk, proIdFk, 
@@ -73,12 +72,11 @@ def regDetallePedido(
               id_medida = medida.get("id_medida")
               valor = medida.get("valor")
 
-              # Validar que vengan los campos necesarios
+              # Validar campos necesarios
               if id_medida is None or valor is None:
                   continue
 
-              # Llamar función
-              regMedidaPedido(id, id_medida, valor)
+              regMedidaPedido(id, id_medida, valor) # insertar medidas
 
         conn.commit()
 
@@ -91,5 +89,41 @@ def regDetallePedido(
         conn.rollback()
         return {"error": str(e)}
 
+    finally:
+        c.close()
+
+def deleteDetPedido(id):
+    conect = current_app.mysql.connection
+    c = conect.cursor()
+    try:
+
+        # descontar cantidad en producto
+        c.execute(f"SELECT proIdFk, detPedCant FROM det_pedido WHERE detPedId = '{id}';")
+        proId = c.fetchone() # almacena Id de producto y cantidad del detalle
+        sql_producto = """
+        UPDATE productos SET
+        proStock = proStock - %s
+        WHERE proId = %s
+        """
+        c.execute(sql_producto, (proId[1], proId[0],))
+
+        # eliminar medidas
+        eliminarMedidas(id)
+
+        # eliminar detalle
+        sql_detalle = """
+        DELETE FROM det_pedido
+        WHERE  detPedId = %s
+        """
+        c.execute(sql_detalle, (id,))
+
+        conect.commit()
+
+        return {
+            "message": "El detalle de pedido fue eliminado con exito"
+        }
+    except Exception as e:
+        conect.rollback()
+        return {"error": str(e)}
     finally:
         c.close()
