@@ -1,10 +1,13 @@
 from flask import jsonify, request
-from services.pedido_services import listarPedidos, regPedidos, delPedido
+from services.pedido_services import listarPedidos, regPedidos, delPedido, listarUnPedido
 
 def cntListadopedido():
     datos = listarPedidos()
     print(datos)
     return datos
+
+def cntListarPedidoPorId(id):
+    return listarUnPedido(id)
 
 def cntRegistrarPedido ():
     data = request.json
