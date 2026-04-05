@@ -1,13 +1,43 @@
-from flask import current_app
+from flask import current_app, jsonify
 from models.pedidos_model import pedidos
 from models.det_pedido_model import det_pedido
 from models.medidas_model import Medidas
 from models.pedido_foto_model import Foto_Pedido
 
+# lista todos los pedidos registrados
 def listarPedidos():
     c = current_app.mysql.connection.cursor()
 
     c.execute("SELECT * FROM pedidos")
+    pedidos_db = c.fetchall()
+
+    resultado = []
+
+    for p in pedidos_db:
+
+        pedido_obj = pedidos(
+           pedId=p[0],
+            pedCliIdFk=p[1],
+            pedFecIng=p[2],
+            pedFecEst=p[3],
+            pedFecEnt=p[4],
+            pedEstFk=p[5],
+            pedObs=p[6],
+            pedTolEst=p[7],
+            pedTipPedFk=p[8],
+            pedRecor=p[9]
+        ).toDic()
+
+        resultado.append(pedido_obj)
+
+    return jsonify(resultado), 200
+
+# lista un pedido que coincida con un id
+def listarUnPedido(id):
+    c = current_app.mysql.connection.cursor()
+
+    c.execute("SELECT * FROM pedidos WHERE pedId = %s", (id,))
+    if c.rowcount == 0: return jsonify({"error": "No existe un pedido registrado con ese id"}), 404
     pedidos_db = c.fetchall()
 
     resultado = []
@@ -29,7 +59,6 @@ def listarPedidos():
                     fotFec=f[2]
                 )
             )
-
 
         c.execute("""
             SELECT detPedId, pedObs, proIdFk, pedIdFk, detPedCant
@@ -84,9 +113,9 @@ def listarPedidos():
 
         resultado.append(pedido_obj)
 
-    return resultado
+    return jsonify(resultado), 200
 
-
+# registrar pedido
 def regPedidos(
         id,
         id_cliente,
@@ -115,6 +144,7 @@ def regPedidos(
     current_app.mysql.connection.commit()
     c.close()
 
+# cancelar pedido
 def delPedido(id):
     conect = current_app.mysql.connection
     c = conect.cursor()
@@ -123,10 +153,13 @@ def delPedido(id):
         sql_pedido = """
         UPDATE pedidos SET
         pedEst = 'CANCELADO'
-        WHERE pedId = %s
+        WHERE pedId = %s 
         """
         
         c.execute(sql_pedido, (id,))
+
+        if c.rowcount == 0:
+            return {"error": "No se encontró el pedido"}, 404
 
         conect.commit()
 
