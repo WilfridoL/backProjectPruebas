@@ -1,9 +1,6 @@
 from flask import current_app
 from models.usuario_model import Usuario
 
-# =====================================================
-# 🔹 LISTAR USUARIOS
-# =====================================================
 def listado_usuarios():
     c = current_app.mysql.connection.cursor()
     c.execute("SELECT * FROM usuario")
