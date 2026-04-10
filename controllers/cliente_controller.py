@@ -1,5 +1,5 @@
 from  flask import jsonify, request
-from services.cliente_services import listado_cliente
+from services.cliente_services import listado_clientes, agregar_cliente
 
 
 def cnlistado_cliente():
