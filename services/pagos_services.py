@@ -19,3 +19,24 @@ def listado_pagos():
         ).toDic()
         d.append(obj)
     return d
+
+
+def crear_pago(data):
+    c = current_app.mysql.connection.cursor()
+
+    # Validar que el pagId no exista
+    c.execute("SELECT pagId FROM pagos WHERE pagId = %s", (data['pagId'],))
+    if c.fetchone():
+        return None, "Ya existe un pago con ese ID"
+
+    sql = """
+        INSERT INTO pagos (pagId, pagVenIdFk, pagMon, pagMetPag, pagFec, pagEst)
+        VALUES (%s, %s, %s, %s, %s, %s)
+    """
+    valores = (
+        data['pagId'], data['pagVenIdFk'], data['pagMon'],
+        data['pagMetPag'], data.get('pagFec'), data['pagEst']
+    )
+    c.execute(sql, valores)
+    current_app.mysql.connection.commit()
+    return data['pagId'], None
