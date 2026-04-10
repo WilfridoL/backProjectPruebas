@@ -7,7 +7,6 @@ def registrarFoto(
   conect = current_app.mysql.connection
   c = conect.cursor()
   try:
-    if len(url) > 500: return jsonify({"error": "la url supera el máximo permitido"}), 400
 
     sql_foto = """
     INSERT INTO pedido_foto (pedIdFk, fotUrl)
