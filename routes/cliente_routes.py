@@ -4,5 +4,5 @@ from controllers.cliente_controller import cnlistado_cliente, cnRegistrar_client
 cliente_bp = Blueprint('cliente_bp', __name__)
 
 # ← sin redefinir funciones, directo al controlador
-cliente_bp.route('/clientes', methods=['GET'])(cnlistado_cliente)
-cliente_bp.route('/clientes', methods=['POST'])(cnRegistrar_cliente)
+cliente_bp.route('/', methods=['GET'])(cnlistado_cliente)
+cliente_bp.route('/', methods=['POST'])(cnRegistrar_cliente)
