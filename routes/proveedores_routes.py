@@ -1,14 +1,27 @@
-from flask import Blueprint
-from controllers.proveedor_controller import (
-    cnlistado_proveedores,
-    cncrear_proveedor,
-    cneliminar_proveedor,
-    cnactualizar_proveedor
+from flask import Blueprint, jsonify, request
+from services.proveedor_services import (
+    listado_proveedores,
+    crear_proveedor,
+    eliminar_proveedor,
+    actualizar_proveedor
 )
 
 proveedor_bp = Blueprint('proveedor_bp', __name__)
 
-proveedor_bp.route('/proveedores', methods=['GET'])(cnlistado_proveedores)
-proveedor_bp.route('/proveedores', methods=['POST'])(cncrear_proveedor)
-proveedor_bp.route('/proveedores/<string:id>', methods=['DELETE'])(cneliminar_proveedor)
-proveedor_bp.route('/proveedores/<string:id>', methods=['PUT'])(cnactualizar_proveedor)
+@proveedor_bp.route('/', methods=['GET'])
+def cnlistado_proveedores():
+    return jsonify(listado_proveedores())
+
+@proveedor_bp.route('/', methods=['POST'])
+def cncrear_proveedor():
+    data = request.json
+    return jsonify({"ok": crear_proveedor(data)})
+
+@proveedor_bp.route('/<string:id>', methods=['DELETE'])
+def cneliminar_proveedor(id):
+    return jsonify({"ok": eliminar_proveedor(id)})
+
+@proveedor_bp.route('/<string:id>', methods=['PUT'])
+def cnactualizar_proveedor(id):
+    data = request.json
+    return jsonify({"ok": actualizar_proveedor(id, data)})

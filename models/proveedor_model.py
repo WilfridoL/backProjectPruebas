@@ -1,14 +1,14 @@
 class Proveedor:
-    def __init__(self, id, nom, tel=None, dir=None,  corr=None):
-        self.provId = id
-        self.provNom = nom
-        self.provTel = tel
-        self.provCorr = corr
-        self.provDir = dir
+    def __init__(self, provId, provNom, provTel=None, provCorr=None, provDir=None):
+        self.provId  = provId
+        self.provNom = provNom
+        self.provTel = provTel
+        self.provCorr = provCorr
+        self.provDir = provDir
 
     def toDic(self):
         return {
-            "provId": self.provId,
+            "provId":  self.provId,
             "provNom": self.provNom,
             "provTel": self.provTel,
             "provCorr": self.provCorr,
