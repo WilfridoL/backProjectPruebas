@@ -8,6 +8,7 @@ from .movimientos_routes import movimiento_bp
 from .pagos_routes import pagos_bp
 from .categoria_routes import categoria_bp
 from .histrial_pedido_routes import historial_pedido_bp
+from .materiales_routes import materiales_bp
 
 def cargarRutas(app):
     app.register_blueprint(producto_bp, url_prefix='/productos')
@@ -20,6 +21,7 @@ def cargarRutas(app):
     app.register_blueprint(pagos_bp, url_prefix='/pagos')
     app.register_blueprint(categoria_bp, url_prefix='/categorias')
     app.register_blueprint(historial_pedido_bp, url_prefix='/historial_pedidos')
+    app.register_blueprint(materiales_bp, url_prefix='/materiales')
     #app.register_blueprint(factura_blueprint ,url_prefix='/factura')
 
 # __int__py
