@@ -1,0 +1,200 @@
+[33mcommit 62a9490d549af1ae96454da59543c8af389766d3[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Javier Mercado <mercadooquendoj@gmail.com>
+Date:   Sat Mar 28 17:15:45 2026 -0500
+
+    api de pago historial_pedido y categoria
+
+[33mcommit 1b460fefcf945a117b94ab77eb2ef48ef26019ae[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Fri Mar 27 10:46:41 2026 -0500
+
+    registrar clientes
+
+[33mcommit e4667ea5643fba55d51d4a6f567948d8aeb5bf3c[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Fri Mar 27 10:22:31 2026 -0500
+
+    refresh
+
+[33mcommit d8c6f8c13d6f6e202d0d628703c1af2c7437b0a8[m
+Author: skrdaniel <danieleren159@gmail.com>
+Date:   Fri Mar 27 09:06:58 2026 -0500
+
+    add agregar cliente service
+
+[33mcommit 788bdd8eca6ff84c3c2587d9768e4cbc95a2944d[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Fri Mar 27 08:28:42 2026 -0500
+
+    modificacion pedidos
+
+[33mcommit 0d81e5c00dbf8097804656776821461d948477ea[m
+Author: skrdaniel <danieleren159@gmail.com>
+Date:   Fri Mar 27 08:06:44 2026 -0500
+
+    .
+
+[33mcommit b8a13f6c35271368153da6ecf403c90e58a63a98[m
+Author: Daniel <daniel@gmail.com>
+Date:   Thu Mar 26 16:58:13 2026 -0500
+
+    controllers faltantes
+
+[33mcommit d4e9dce647dc748caf753fded27509c34f043658[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Wed Mar 25 21:54:37 2026 -0500
+
+    mini correcciones
+
+[33mcommit 4f04a3f55318318091881bbac7039615172d1f47[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Wed Mar 25 20:29:10 2026 -0500
+
+    pillo
+
+[33mcommit 4f297f04eea165eacaee7abff3c2cf709b8cf33f[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Wed Mar 25 11:34:56 2026 -0500
+
+    producto ruta
+
+[33mcommit 4e25d8cd031deaac555427fd6e00b8db8b96984b[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Wed Mar 25 11:04:17 2026 -0500
+
+    hh
+
+[33mcommit 5fa37526e905dc969fd6c4a4b0c23435f0f489f5[m
+Merge: 87e6ed1 b78a440
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Wed Mar 25 10:54:14 2026 -0500
+
+    Merge branch 'main' of https://github.com/WilfridoL/backProjectPruebas
+
+[33mcommit 87e6ed1c792b81962f9492c41387036984333ecb[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Wed Mar 25 10:54:02 2026 -0500
+
+    modulo pedido terminado
+
+[33mcommit b78a4405f615b8468c539dc4934d49669488c0dc[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Wed Mar 25 09:27:45 2026 -0500
+
+    gallo
+
+[33mcommit 1f5a81de12ace1558e5dd181b5ad53dade3d6864[m
+Merge: 37c5027 67238ba
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Wed Mar 25 09:08:55 2026 -0500
+
+    Merge branch 'main' of https://github.com/WilfridoL/backProjectPruebas
+
+[33mcommit 37c502741dea3ee8c3137d0dddbd5e55dae8b5fb[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Wed Mar 25 09:08:50 2026 -0500
+
+    pollo
+
+[33mcommit 67238ba0d17831ca26dee4a43fc6f10dec20a603[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Wed Mar 25 08:53:19 2026 -0500
+
+    cliente bug arreglado
+
+[33mcommit ba413b2f2392e929d4a709add3f4615d8ca99179[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 14:00:55 2026 -0500
+
+    add ruta cliente
+
+[33mcommit 2f0365231dc4a2d2d26102ef9e59d7bbbce3796d[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 13:41:02 2026 -0500
+
+    mod servicis_usuario
+
+[33mcommit 93acc33a8c8b3e1ed42eaf22b868c65f14b2eb9a[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 13:30:02 2026 -0500
+
+    Correccion del servidor
+
+[33mcommit 8c3652a8faa35516b94c0f0cd94f952688396ee2[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 12:46:36 2026 -0500
+
+    aaa
+
+[33mcommit 7785637f34cbd85a0e53c3b3009844af4e1cdd31[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Fri Mar 20 08:56:07 2026 -0500
+
+    fff
+
+[33mcommit bad173f4484ba35e902a9c9ce38a3ebcd6a90770[m
+Merge: f31a6c9 edab6fc
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Fri Mar 20 08:55:15 2026 -0500
+
+    mmh
+
+[33mcommit f31a6c9f3c19a4c770a7ca50c9fac173ffab2c52[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Fri Mar 20 08:53:05 2026 -0500
+
+    acciones
+
+[33mcommit edab6fcf1fbe83fdf1c883ddbcfacb14ea23742f[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 12:07:59 2026 -0500
+
+    add clientes
+
+[33mcommit 8c168cb5a435d75ce86a5aed1a3fa3a5092ede7b[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 11:47:17 2026 -0500
+
+    correcciones de carpeta
+
+[33mcommit bcf5fdbb449d823926a7dd95a5b5f3142e34dc00[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Fri Mar 20 08:24:38 2026 -0500
+
+    fff
+
+[33mcommit 08058ce7af3d802d6f115623401e18fb4f67b62d[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Fri Mar 20 08:24:10 2026 -0500
+
+    pedro pascal
+
+[33mcommit dcd648175506e7ba27b1ba3b0c809739398a9072[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Thu Mar 19 11:32:51 2026 -0500
+
+    mod nombre archivo model
+
+[33mcommit b50df013b3f87f9f548746abe25796977d57687d[m
+Author: delioomega <deliorafaelcantillovilla@gmail.com>
+Date:   Wed Mar 18 08:28:43 2026 -0500
+
+    pepe el gallo
+
+[33mcommit f3a4c3b50b34662df7a1a185921e4329c12075d2[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Tue Mar 17 09:28:39 2026 -0500
+
+    modelos modulo venta y proveedor
+
+[33mcommit fcaa80d0d7a585e73fcadf41c76571472a28ec97[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Tue Mar 17 08:48:27 2026 -0500
+
+    agregar carpetas faltantes
+
+[33mcommit cc0ef5719ed398ef868e7e16984f94e724555a99[m
+Author: WilDev <wilfridorafaellawson@gmail.com>
+Date:   Tue Mar 17 08:38:26 2026 -0500
+
+    estructura base
