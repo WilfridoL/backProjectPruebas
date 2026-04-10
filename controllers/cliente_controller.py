@@ -1,24 +1,26 @@
 from  flask import jsonify, request
-from services.cliente_services import listado_cliente, agregar_cliente
+from services.cliente_services import listado_cliente
 
 
 def cnlistado_cliente():
-    data=listado_cliente()
-    return jsonify(data)
+    return jsonify(listado_clientes())
 
 def cnRegistrar_cliente():
-    # requerido = ["cliId", "cliNom", "cliApe", "cliTel", "usuId"]
-    # resultado = [x for x in requerido if not in request.json[]]
-    print(request.json)
-    agregar_cliente(
-        request.json["id"],
-        request.json["nombre"],
-        request.json["apellido"],
-        request.json["telefono"],
-        request.json["usuId"]
+    payload = request.json or {}
+    required = ["cliId", "cliNom", "cliApe", "cliTel", "usuIdFk"]  # ← corregido
+    missing = [f for f in required if f not in payload]
+    if missing:
+        return jsonify({"mensaje": "Campos faltantes", "faltantes": missing}), 400
 
+    success = agregar_cliente(
+        payload["cliId"],
+        payload["cliNom"],
+        payload["cliApe"],
+        payload["cliTel"],
+        payload["usuIdFk"]
     )
-    return jsonify({
-        "message": "registro con exito",
-        "data": request.json
-    })
+
+    if success:
+        return jsonify({"mensaje": "Cliente registrado con éxito"}), 201
+    else:
+        return jsonify({"mensaje": "Error al crear cliente"}), 500

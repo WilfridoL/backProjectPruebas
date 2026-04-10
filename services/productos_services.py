@@ -35,5 +35,13 @@ def listado_productos():
     return d
 
 
-def buscarXid(id):
-    return
+
+
+
+    def registrar(id, nom, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk):
+        c = current_app.mysql.connection.cursor()
+        sql = "INSERT INTO productos (proId, proNom, proStock, proPreUni, proDesc, proGen, proCatFk, proTipPreFk, proTipPro, proUmbMin, proTallFk, proProvFk) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        c.execute(sql, (id, nom, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk))
+        c.close()
+
+        return Producto(id , nom, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk).toDic()
