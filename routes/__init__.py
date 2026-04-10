@@ -9,11 +9,10 @@ from .pagos_routes import pagos_bp
 from .categoria_routes import categoria_bp
 from .histrial_pedido_routes import historial_pedido_bp
 from .factura_routes import factura_bp
+from .roles_routes import rol_bp
 
 def cargarRutas(app):
     app.register_blueprint(producto_bp, url_prefix='/productos')
-    app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
-    app.register_blueprint(cliente_bp, url_prefix='/clientes')
     app.register_blueprint(usuarios_bp, url_prefix='/usuarios')
     app.register_blueprint(cliente_bp, url_prefix='/clientes')
     app.register_blueprint(pedidos_bp, url_prefix='/pedidos')
@@ -24,5 +23,5 @@ def cargarRutas(app):
     app.register_blueprint(categoria_bp, url_prefix='/categorias')
     app.register_blueprint(historial_pedido_bp, url_prefix='/historial_pedidos')
     app.register_blueprint(factura_bp, url_prefix='/factura')
-
+    app.register_blueprint(rol_bp, url_prefix='/roles')
 # __int__py
