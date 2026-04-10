@@ -30,19 +30,17 @@ def listado_usuarios():
 # =====================================================
 def crear_usuario(data):
     try:
-        # Validar que el correo tenga formato básico
+        
         if '@' not in data.get('usuCor', ''):
             raise ValueError("Correo inválido")
 
-        # Validar que el teléfono solo tenga números
+       
         if not str(data.get('usuTel', '')).isdigit():
             raise ValueError("Teléfono inválido, solo números")
 
-        # Validar que el rol sea 1 o 2
         if data.get('usuRol') not in [1, 2]:
             raise ValueError("Rol inválido, debe ser 1 o 2")
 
-        # Validar longitud mínima de contraseña
         if len(data.get('usuPassHash', '')) < 6:
             raise ValueError("La contraseña debe tener al menos 6 caracteres")
 
@@ -60,7 +58,7 @@ def crear_usuario(data):
             data['usuApe'],
             data['usuTel'],
             data['usuCor'],
-            data['usuPassHash'],  # ⚠️ luego puedes encriptar
+            data['usuPassHash'],  
             data['usuRol'],
             data.get('usuSupFk'),
             data.get('usuEst', 1)
@@ -79,12 +77,10 @@ def crear_usuario(data):
         return False
 
 
-# =====================================================
-# 🔹 ELIMINAR USUARIO (LÓGICO)
-# =====================================================
+
 def eliminar_usuario(id):
     try:
-        # Validar que el usuario exista antes de eliminar
+   
         c = current_app.mysql.connection.cursor()
         c.execute("SELECT usuId FROM usuario WHERE usuId = %s", (id,))
         if not c.fetchone():
@@ -105,26 +101,22 @@ def eliminar_usuario(id):
         return False
 
 
-# =====================================================
-# 🔹 ACTUALIZAR USUARIO
-# =====================================================
 def actualizar_usuario(id, data):
     try:
-        # Validar que el usuario exista antes de actualizar
+ 
         c = current_app.mysql.connection.cursor()
         c.execute("SELECT usuId FROM usuario WHERE usuId = %s", (id,))
         if not c.fetchone():
             raise ValueError(f"No existe un usuario con ID {id}")
 
-        # Validar correo
+  
         if '@' not in data.get('usuCor', ''):
             raise ValueError("Correo inválido")
 
-        # Validar teléfono
         if not str(data.get('usuTel', '')).isdigit():
             raise ValueError("Teléfono inválido, solo números")
 
-        # Validar rol
+       
         if data.get('usuRol') not in [1, 2]:
             raise ValueError("Rol inválido, debe ser 1 o 2")
 

@@ -1,10 +1,5 @@
 from flask import Blueprint, jsonify, request
-from controllers.proveedores_controller import (
-    listado_proveedores,
-    crear_proveedor,
-    eliminar_proveedor,
-    actualizar_proveedor
-)
+from controllers.proveedores_controller import *
 
 proveedor_bp = Blueprint('proveedor_bp', __name__)
 

@@ -7,7 +7,7 @@ class Usuario:   # ← Capital U
         self.usuCor      = usuCor
         self.usuPassHash = usuPassHash
         self.usuRol      = usuRol
-        self.usuSupFk    = usuSupFk   # ← k minúscula
+        self.usuSupFk    = usuSupFk  
         self.usuEst      = usuEst
         self.usuFecReg   = usuFecReg
 
@@ -20,7 +20,7 @@ class Usuario:   # ← Capital U
             'usuCor':      self.usuCor,
             'usuPassHash': self.usuPassHash,
             'usuRol':      self.usuRol,
-            'usuSupFk':    self.usuSupFk,   # ← k minúscula
+            'usuSupFk':    self.usuSupFk,   
             'usuEst':      self.usuEst,
             'usuFecReg':   self.usuFecReg
         }

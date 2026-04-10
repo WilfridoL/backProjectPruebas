@@ -52,9 +52,6 @@ def crear_proveedor(data):
         return False
 
 
-# =====================================================
-# 🔹 ELIMINAR PROVEEDOR
-# =====================================================
 def eliminar_proveedor(id):
     try:
         c = current_app.mysql.connection.cursor()
@@ -71,9 +68,7 @@ def eliminar_proveedor(id):
         return False
 
 
-# =====================================================
-# 🔹 ACTUALIZAR PROVEEDOR
-# =====================================================
+
 def actualizar_proveedor(id, data):
     try:
         c = current_app.mysql.connection.cursor()

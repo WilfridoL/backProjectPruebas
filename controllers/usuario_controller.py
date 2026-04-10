@@ -6,16 +6,16 @@ from services.usuario_services import (
     actualizar_usuario
 )
 
-# 🔹 LISTAR
+
 def cnlistado_usuarios():
     data = listado_usuarios()
     return jsonify(data)
 
-# 🔹 CREAR
+
 def cncrear_usuario():
     data = request.json
 
-    # Validaciones
+  
     if not data:
         return jsonify({"mensaje": "No se enviaron datos"}), 400
 
@@ -31,9 +31,9 @@ def cncrear_usuario():
     else:
         return jsonify({"mensaje": "Error al crear usuario"}), 500
 
-# 🔹 ELIMINAR
+
 def cneliminar_usuario(id):
-    # Validaciones
+  
     if not id or not id.strip():
         return jsonify({"mensaje": "ID no válido"}), 400
 
@@ -44,11 +44,11 @@ def cneliminar_usuario(id):
     else:
         return jsonify({"mensaje": "Error al eliminar"}), 500
 
-# 🔹 ACTUALIZAR
+
 def cnactualizar_usuario(id):
     data = request.json
 
-    # Validaciones
+
     if not id or not id.strip():
         return jsonify({"mensaje": "ID no válido"}), 400
 
