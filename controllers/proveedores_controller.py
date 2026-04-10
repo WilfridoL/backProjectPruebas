@@ -12,8 +12,8 @@ def cnlistado_proveedores():
     return jsonify(data)
 
 
-def cncrear_proveedor(data):
-
+def cncrear_proveedor():
+    data = request.json
     if not data:
         return jsonify({"mensaje": "No se enviaron datos"}), 400
 
@@ -30,7 +30,7 @@ def cncrear_proveedor(data):
 
     if data.get("provCorr") and "@" not in data["provCorr"]:
         return jsonify({"mensaje": "El correo no tiene un formato válido"}), 400
-
+    
     resp = crear_proveedor(data)
 
     if resp:
