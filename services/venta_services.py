@@ -11,14 +11,14 @@ def listado_ventas():
     d = []
     for p in data:
         obj = Ventas(
-            venID=p[0],
-            venFec=p[1],
-            venDesc=p[2],
-            estadoPago=p[3],
-            venTotal=p[4],
-            cliIdFk=p[5],
-            usuIdFk=p[6],
-            pedIdFk=p[7]
+            id=p[0],
+            fecha=p[1],
+            desc=p[2],
+            estPag=p[3],
+            total=p[4],
+            cliFk=p[5],
+            usufk=p[6],
+            pedFk=p[7]
         ).toDic()
         d.append(obj)
     
