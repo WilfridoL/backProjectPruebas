@@ -12,8 +12,7 @@ def cnlistado_proveedores():
     return jsonify(data)
 
 # 🔹 CREAR
-def cncrear_proveedor():
-    data = request.json
+def cncrear_proveedor(data):
     resp = crear_proveedor(data)
 
     if resp:
