@@ -23,9 +23,7 @@ def listado_proveedores():
     return d
 
 
-# =====================================================
-# 🔹 CREAR PROVEEDOR
-# =====================================================
+
 def crear_proveedor(data):
     try:
         c = current_app.mysql.connection.cursor()

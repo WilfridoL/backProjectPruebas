@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify, request
-from services.proveedores_services import (
+from controllers.proveedores_controller import (
     listado_proveedores,
     crear_proveedor,
     eliminar_proveedor,
