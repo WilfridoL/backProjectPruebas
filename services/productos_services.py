@@ -35,13 +35,25 @@ def listado_productos():
     return d
 
 
+def crear_producto(data):
+    c = current_app.mysql.connection.cursor()
 
+    # Validar que el ID no exista
+    c.execute("SELECT proId FROM productos WHERE proId = %s", (data['proId'],))
+    if c.fetchone():
+        return None, "Ya existe un producto con ese ID"
 
-
-    def registrar(id, nom, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk):
-        c = current_app.mysql.connection.cursor()
-        sql = "INSERT INTO productos (proId, proNom, proStock, proPreUni, proDesc, proGen, proCatFk, proTipPreFk, proTipPro, proUmbMin, proTallFk, proProvFk) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        c.execute(sql, (id, nom, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk))
-        c.close()
-
-        return Producto(id , nom, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk).toDic()
+    sql = """
+        INSERT INTO productos 
+        (proId, proNom, proStock, proPreUni, proDesc, proGen, proCatFk, proTipPreFk, proTipPro, proUmbMin, proTallFk, proProvFk)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
+    valores = (
+        data['proId'], data['proNom'], data['proStock'], data['proPreUni'],
+        data.get('proDesc'), data.get('proGen'), data.get('proCatFk'),
+        data.get('proTipPreFk'), data['proTipPro'], data.get('proUmbMin'),
+        data.get('proTallFk'), data.get('proProvFk')
+    )
+    c.execute(sql, valores)
+    current_app.mysql.connection.commit()
+    return data['proId'], None

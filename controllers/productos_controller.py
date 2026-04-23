@@ -1,5 +1,5 @@
 from  flask import jsonify, request
-from services.productos_services import listado_productos
+from services.productos_services import listado_productos, crear_producto
 
 
 def cnlistado_productos():
@@ -7,21 +7,14 @@ def cnlistado_productos():
     # print(data)
     return jsonify(data)
 
-def cnregistrar_producto():
-    requerido = ['nombre', 'stock', 'preUni', 'desc', 'gen', 'catFk', 'tipPreFk', 'tipPro', 'umbMin', 'tallFk', 'provFk']
-    faltantes = [ x for x in requerido if x not in request.json]
-    if faltantes:
-        return jsonify({"error": "Faltan campos requeridos", "campos": faltantes}), 400
-    nombre = request.json['nombre']
-    stock = request.json['stock']
-    preUni = request.json['preUni']
-    desc = request.json['desc']
-    gen = request.json['gen']
-    catFk = request.json['catFk']
-    tipPreFk = request.json['tipPreFk']
-    tipPro = request.json['tipPro']
-    umbMin = request.json['umbMin']
-    tallFk = request.json['tallFk']
-    provFk = request.json['provFk']
-    data = listado_productos().registrar(nombre, stock, preUni, desc, gen, catFk, tipPreFk, tipPro, umbMin, tallFk, provFk)
-    return jsonify(data)
+def cn_crear_producto():
+    data = request.get_json()
+    campos = ['proId', 'proNom', 'proStock', 'proPreUni', 'proTipPro']
+    for campo in campos:
+        if not data or campo not in data or data[campo] == '':
+            return jsonify({"error": f"El campo '{campo}' es obligatorio"}), 400
+
+    resultado, error = crear_producto(data)
+    if error:
+        return jsonify({"error": error}), 409
+    return jsonify({"mensaje": "Producto creado", "proId": resultado}), 201

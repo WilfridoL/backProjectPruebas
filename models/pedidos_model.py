@@ -29,7 +29,7 @@ class pedidos:
         self.fotos = fotos if fotos else []
 
     def toDic(self):
-        return {
+        data = {
             'pedId': self.pedId,
             'pedCliIdFk': self.pedCliIdFk,
             'pedFecIng': self.pedFecIng,
@@ -40,7 +40,12 @@ class pedidos:
             'pedTolEst': self.pedTolEst,
             'pedTipPedFk': self.pedTipPedFk,
             'pedRecor': self.pedRecor,
-
-            "detalles": [d.toDic() for d in self.detalles],
-            "fotos": [f.toDic() for f in self.fotos]
         }
+
+        # Solo se agregan a data si traen datos
+        if self.detalles:
+            data["detalles"] = [d.toDic() for d in self.detalles]
+        if self.fotos:
+            data["fotos"] = [f.toDic() for f in self.fotos]
+
+        return data

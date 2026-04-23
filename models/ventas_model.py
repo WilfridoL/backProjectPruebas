@@ -1,9 +1,9 @@
 from datetime import datetime
 
 class Ventas:
-    def __init__(self, id, desc, estPag, total, cliFk, usufk,pedFk=None):
+    def __init__(self, id, fecha=None, desc=0, estPag='SIN PAGAR', total=0.00, cliFk=None, usufk=None, pedFk=None):
         self.venId = id
-        self.venFac = datetime.now().strftime("%d/%m/%Y")
+        self.venFec = fecha or datetime.now().strftime("%Y-%m-%d")
         self.venDesc = desc
         self.estadoPago = estPag
         self.venTotal = total
@@ -14,6 +14,7 @@ class Ventas:
     def toDic(self):
         return {
             "venId": self.venId,
+            "venFec": self.venFec,
             "venDesc": self.venDesc,
             "estadoPago": self.estadoPago,
             "venTotal": self.venTotal,
