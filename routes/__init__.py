@@ -22,8 +22,6 @@ def cargarRutas(app):
     app.register_blueprint(proveedor_bp, url_prefix='/proveedores')
     app.register_blueprint(movimiento_bp, url_prefix='/movimientos')
     app.register_blueprint(pagos_bp, url_prefix='/pagos')
-    app.register_blueprint(categoria_bp, url_prefix='/categoria')
-    app.register_blueprint(historial_pedido_bp, url_prefix='/historial_pedido')
     app.register_blueprint(documentacion_bp, url_prefix='/documentacion')
     #app.register_blueprint(factura_blueprint ,url_prefix='/factura')
 
