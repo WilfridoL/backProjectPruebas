@@ -28,6 +28,6 @@ def cargarRutas(app):
     app.register_blueprint(categoria_bp, url_prefix='/categorias')
     app.register_blueprint(historial_pedido_bp, url_prefix='/historial_pedidos')
     app.register_blueprint(materiales_bp, url_prefix='/materiales')
-    app.register_blueprint(factura_bp, url_prefix='/factura')
+    app.register_blueprint(factura_bp, url_prefix='/facturas')
     app.register_blueprint(rol_bp, url_prefix='/roles')
 # __int__py

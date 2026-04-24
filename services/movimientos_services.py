@@ -15,9 +15,9 @@ def listado_movimientos():
             cantidad=p[2],
             fecha=p[3],
             observacion=p[4],
-            usuIdFk=p[5],
-            proIdFk=p[6],
-            matIdFk=p[7]
+            usuIdFK=p[5],
+            # proIdFk=p[6],
+            # matIdFk=p[7]
         ).toDic()
         d.append(obj)
     

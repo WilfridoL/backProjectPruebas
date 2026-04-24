@@ -5,7 +5,7 @@ class movimientos:
         self.cantidad      = cantidad
         self.fecha         = fecha
         self.observacion   = observacion
-        self.usuIdFK       = usuIdFK
+        self.usuIdFk       = usuIdFK
     def toDic(self):
         return {
             'idMov': self.idMov,
@@ -13,5 +13,5 @@ class movimientos:
             'cantidad': self.cantidad,
             'fecha': self.fecha,
             'observacion': self.observacion,
-            'usuIdFK': self.usuIdFK
+            'usuIdFK': self.usuIdFk
         }
