@@ -25,56 +25,88 @@
   "paths": {
 
     "/usuario": {
-      "get": {
-        "tags": ["Usuario"],
-        "summary": "Listar usuarios",
-        "responses": {
-          "200": { "description": "Lista de usuarios" }
-        }
-      },
-      "post": {
-        "tags": ["Usuarios"],
-        "summary": "Crear usuario",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+  "get": {
+    "tags": ["Usuarios"],
+    "summary": "Listar usuarios",
+    "responses": {
+      "200": {
+        "description": "Lista de usuarios",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
                 "type": "object",
                 "properties": {
-                  "nombre": { "type": "string" },
-                  "genero": { "type": "string" },
-                  "frm":    { "type": "string" },
-                  "numdoc": { "type": "string" }
+                  "usuId":       { "type": "string" },
+                  "usuNom":      { "type": "string" },
+                  "usuApe":      { "type": "string" },
+                  "usuTel":      { "type": "string" },
+                  "usuCor":      { "type": "string" },
+                  "usuPassHash": { "type": "string" },
+                  "usuRol":      { "type": "string" }
                 }
               }
             }
           }
-        },
-        "responses": {
-          "201": { "description": "Usuario creado" }
         }
       }
-    },
-
-    "/usuarios/{id}": {
-      "get": {
-        "tags": ["Usuarios"],
-        "summary": "Obtener usuario por ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
+    }
+  },
+  "post": {
+    "tags": ["Usuarios"],
+    "summary": "Crear usuario",
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "required": ["usuId", "usuNom", "usuApe", "usuTel", "usuCor", "usuPassHash", "usuRol"],
+            "properties": {
+              "usuId":       { "type": "string", "example": "U001",            "description": "ID único del usuario (requerido)" },
+              "usuNom":      { "type": "string", "example": "Juan",            "description": "Nombre del usuario (requerido)" },
+              "usuApe":      { "type": "string", "example": "Pérez",           "description": "Apellido del usuario (requerido)" },
+              "usuTel":      { "type": "string", "example": "3001234567",      "description": "Teléfono del usuario (requerido)" },
+              "usuCor":      { "type": "string", "example": "juan@correo.com", "description": "Correo electrónico (requerido)" },
+              "usuPassHash": { "type": "string", "example": "miPassword123",   "description": "Contraseña del usuario (requerido)" },
+              "usuRol":      { "type": "string", "example": "ADMIN",           "description": "Rol del usuario (requerido)" }
+            }
           }
-        ],
-        "responses": {
-          "200": { "description": "Usuario encontrado" },
-          "404": { "description": "Usuario no encontrado" }
         }
       }
     },
+    "responses": {
+      "200": {
+        "description": "Usuario creado correctamente",
+        "content": {
+          "application/json": {
+            "example": { "mensaje": "Usuario creado correctamente" }
+          }
+        }
+      },
+      "400": {
+        "description": "Error de validación",
+        "content": {
+          "application/json": {
+            "examples": {
+              "sin_datos":        { "value": { "mensaje": "No se enviaron datos" } },
+              "campos_faltantes": { "value": { "mensaje": "Campos requeridos faltantes", "faltantes": ["usuNom"] } }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error interno",
+        "content": {
+          "application/json": {
+            "example": { "mensaje": "Error al crear usuario" }
+          }
+        }
+      }
+    }
+  }
+},
 
     "/proveedores": {
       "get": {
@@ -330,49 +362,7 @@
       }
     },
 
-    "/ventas/{id}": {
-      "patch": {
-        "tags": ["Ventas"],
-        "summary": "Anular venta",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" },
-            "example": 1,
-            "description": "ID de la venta a anular"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Venta anulada correctamente",
-            "content": {
-              "application/json": {
-                "example": { "mensaje": "Venta anulada correctamente" }
-              }
-            }
-          },
-          "400": {
-            "description": "Error al anular",
-            "content": {
-              "application/json": {
-                "example": { "error": "Mensaje de error del servicio" }
-              }
-            }
-          },
-          "500": {
-            "description": "Error interno",
-            "content": {
-              "application/json": {
-                "example": { "error": "Descripción del error interno" }
-              }
-            }
-          }
-        }
-      }
-    },
-
+    
     "/movimientos": {
       "get": {
         "tags": ["Movimientos"],
