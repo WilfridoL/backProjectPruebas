@@ -6,29 +6,30 @@
     "version": "2.0.0"
   },
   "servers": [
-    {
-     "url": "http://localhost:4000"    }
+    { "url": "http://localhost:4000" }
   ],
   "tags": [
-    {
-      "name": "Usuario",
-      "description": "Gestión de aprendices"
-    },
-    {
-      "name": "Eventos",
-      "description": "Gestión de eventos"
-    }
+    { "name": "Usuario",          "description": "Gestión de aprendices" },
+    { "name": "Eventos",          "description": "Gestión de eventos" },
+    { "name": "Proveedores",      "description": "Gestión de proveedores" },
+    { "name": "Clientes",         "description": "Gestión de clientes" },
+    { "name": "Ventas",           "description": "Gestión de ventas" },
+    { "name": "Movimientos",      "description": "Gestión de movimientos" },
+    { "name": "Categorias",       "description": "Gestión de categorias" },
+    { "name": "Historial Pedidos","description": "Gestión de historial de pedidos" },
+    { "name": "Roles",            "description": "Gestión de roles" },
+    { "name": "Pagos",            "description": "Gestión de pagos" },
+    { "name": "Facturas",         "description": "Gestión de facturas" },
+    { "name": "Materiales",       "description": "Gestión de materiales" }
   ],
   "paths": {
-    
+
     "/usuario": {
       "get": {
         "tags": ["Usuario"],
         "summary": "Listar usuarios",
         "responses": {
-          "200": {
-            "description": "Lista de usuarios"
-          }
+          "200": { "description": "Lista de usuarios" }
         }
       },
       "post": {
@@ -43,7 +44,7 @@
                 "properties": {
                   "nombre": { "type": "string" },
                   "genero": { "type": "string" },
-                  "frm": { "type": "string" },
+                  "frm":    { "type": "string" },
                   "numdoc": { "type": "string" }
                 }
               }
@@ -51,9 +52,7 @@
           }
         },
         "responses": {
-          "201": {
-            "description": "Usuario creado"
-          }
+          "201": { "description": "Usuario creado" }
         }
       }
     },
@@ -71,36 +70,53 @@
           }
         ],
         "responses": {
+          "200": { "description": "Usuario encontrado" },
+          "404": { "description": "Usuario no encontrado" }
+        }
+      }
+    },
+
+    "/proveedores": {
+      "get": {
+        "tags": ["Proveedores"],
+        "summary": "Listar proveedores",
+        "responses": {
           "200": {
-            "description": "Usuario encontrado"
-          },
-          "404": {
-            "description": "Usuario no encontrado"
+            "description": "Lista de proveedores",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "provId":   { "type": "string" },
+                      "provNom":  { "type": "string" },
+                      "provTel":  { "type": "string" },
+                      "provCorr": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
-      "patch": {
-        "tags": ["Usuarios"],
-        "summary": "Actualizar usuario",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
+      "post": {
+        "tags": ["Proveedores"],
+        "summary": "Crear proveedor",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["provId", "provNom"],
                 "properties": {
-                  "nombre": { "type": "string" },
-                  "genero": { "type": "string" },
-                  "frm": { "type": "string" },
-                  "numdoc": { "type": "string" }
+                  "provId":   { "type": "string", "example": "P001",              "description": "ID único del proveedor (requerido)" },
+                  "provNom":  { "type": "string", "example": "Distribuidora XYZ", "description": "Nombre del proveedor (requerido)" },
+                  "provTel":  { "type": "string", "example": "3001234567",        "description": "Teléfono solo números (opcional)" },
+                  "provCorr": { "type": "string", "example": "contacto@xyz.com",  "description": "Correo electrónico válido (opcional)" }
                 }
               }
             }
@@ -108,52 +124,82 @@
         },
         "responses": {
           "200": {
-            "description": "Usuario actualizado"
-          }
-        }
-      },
-      "delete": {
-        "tags": ["Usuarios"],
-        "summary": "Eliminar usuario",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Usuario eliminado"
+            "description": "Proveedor creado correctamente",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Proveedor creado correctamente" }
+              }
+            }
+          },
+          "400": {
+            "description": "Error de validación",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sin_datos":        { "value": { "mensaje": "No se enviaron datos" } },
+                  "campos_faltantes": { "value": { "mensaje": "Campos requeridos faltantes", "faltantes": ["provId"] } },
+                  "tel_invalido":     { "value": { "mensaje": "El teléfono solo debe contener números" } },
+                  "correo_invalido":  { "value": { "mensaje": "El correo no tiene un formato válido" } }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno del servidor",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Error al crear proveedor" }
+              }
+            }
           }
         }
       }
     },
 
-    "/eventos": {
+   
+    "/clientes": {
       "get": {
-        "tags": ["Eventos"],
-        "summary": "Listar eventos",
+        "tags": ["Clientes"],
+        "summary": "Listar clientes",
         "responses": {
           "200": {
-            "description": "Lista de eventos"
+            "description": "Lista de clientes",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "cliId":   { "type": "integer" },
+                      "cliNom":  { "type": "string" },
+                      "cliApe":  { "type": "string" },
+                      "cliTel":  { "type": "string" },
+                      "usuIdFk": { "type": "integer" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "tags": ["Eventos"],
-        "summary": "Crear evento",
+        "tags": ["Clientes"],
+        "summary": "Registrar cliente",
         "requestBody": {
           "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["cliId", "cliNom", "cliApe", "cliTel", "usuIdFk"],
                 "properties": {
-                  "nombre": { "type": "string" },
-                  "fecha": { "type": "string", "format": "date" },
-                  "lugar": { "type": "string" }
+                  "cliId":   { "type": "integer", "example": 1,            "description": "Entero positivo (requerido)" },
+                  "cliNom":  { "type": "string",  "example": "Juan",       "description": "Solo letras, máx 100 caracteres (requerido)" },
+                  "cliApe":  { "type": "string",  "example": "Pérez",      "description": "Solo letras, máx 100 caracteres (requerido)" },
+                  "cliTel":  { "type": "string",  "example": "3001234567", "description": "Solo dígitos, entre 7 y 15 caracteres (requerido)" },
+                  "usuIdFk": { "type": "integer", "example": 5,            "description": "ID del usuario asociado, entero positivo (requerido)" }
                 }
               }
             }
@@ -161,64 +207,503 @@
         },
         "responses": {
           "201": {
-            "description": "Evento creado"
+            "description": "Cliente registrado con éxito",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Cliente registrado con éxito" }
+              }
+            }
+          },
+          "400": {
+            "description": "Error de validación",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "campos_faltantes": { "value": { "mensaje": "Campos faltantes", "faltantes": ["cliTel"] } },
+                  "cliId_invalido":   { "value": { "mensaje": "cliId debe ser un entero positivo" } },
+                  "usuIdFk_invalido": { "value": { "mensaje": "usuIdFk debe ser un entero positivo" } },
+                  "cliNom_invalido":  { "value": { "mensaje": "cliNom solo debe contener letras y no estar vacío" } },
+                  "cliNom_largo":     { "value": { "mensaje": "cliNom no puede superar los 100 caracteres" } },
+                  "cliApe_invalido":  { "value": { "mensaje": "cliApe solo debe contener letras y no estar vacío" } },
+                  "cliApe_largo":     { "value": { "mensaje": "cliApe no puede superar los 100 caracteres" } },
+                  "cliTel_invalido":  { "value": { "mensaje": "cliTel solo debe contener dígitos" } },
+                  "cliTel_longitud":  { "value": { "mensaje": "cliTel debe tener entre 7 y 15 dígitos" } }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Error al crear cliente" }
+              }
+            }
           }
         }
       }
     },
 
-    "/eventos/{id}": {
+    "/ventas": {
       "get": {
-        "tags": ["Eventos"],
-        "summary": "Obtener evento por ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
+        "tags": ["Ventas"],
+        "summary": "Listar ventas",
         "responses": {
           "200": {
-            "description": "Evento encontrado"
+            "description": "Lista de ventas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id_cliente":   { "type": "integer" },
+                      "id_usuario":   { "type": "integer" },
+                      "fecha":        { "type": "string", "format": "date" },
+                      "descuento":    { "type": "number" },
+                      "estado_pago":  { "type": "string" },
+                      "id_pedido":    { "type": "integer" },
+                      "fecha_limite": { "type": "string", "format": "date" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Ventas"],
+        "summary": "Registrar venta",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["id_cliente", "id_usuario"],
+                "properties": {
+                  "id_cliente":   { "type": "integer", "example": 1,           "description": "ID del cliente (requerido)" },
+                  "id_usuario":   { "type": "integer", "example": 2,           "description": "ID del usuario (requerido)" },
+                  "fecha":        { "type": "string",  "format": "date", "example": "2025-04-23", "description": "Fecha de la venta (opcional)" },
+                  "descuento":    { "type": "number",  "example": 0,           "description": "Descuento aplicado, por defecto 0 (opcional)" },
+                  "estado_pago":  { "type": "string",  "example": "SIN PAGAR", "description": "Por defecto SIN PAGAR (opcional)", "enum": ["PAGADO", "ANULADO", "ADELANTADO", "SIN PAGAR"] },
+                  "id_pedido":    { "type": "integer", "example": 10,          "description": "ID del pedido asociado (opcional)" },
+                  "fecha_limite": { "type": "string",  "format": "date", "example": "2025-05-01", "description": "Fecha límite de pago (opcional)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Venta registrada correctamente",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Venta registrada con éxito" }
+              }
+            }
           },
-          "404": {
-            "description": "Evento no encontrado"
+          "400": {
+            "description": "Error de validación",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sin_body":         { "value": { "error": "Se requiere un body en formato JSON" } },
+                  "campos_faltantes": { "value": { "error": "Faltan campos obligatorios", "faltantes": ["id_cliente"] } },
+                  "estado_invalido":  { "value": { "error": "estado_pago inválido. Valores permitidos: ['PAGADO', 'ANULADO', 'ADELANTADO', 'SIN PAGAR']" } },
+                  "error_servicio":   { "value": { "error": "Mensaje de error del servicio" } }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "example": { "error": "Descripción del error interno" }
+              }
+            }
           }
         }
-      },
+      }
+    },
+
+    "/ventas/{id}": {
       "patch": {
-        "tags": ["Eventos"],
-        "summary": "Actualizar evento",
+        "tags": ["Ventas"],
+        "summary": "Anular venta",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
-            "schema": { "type": "integer" }
+            "schema": { "type": "integer" },
+            "example": 1,
+            "description": "ID de la venta a anular"
           }
         ],
         "responses": {
           "200": {
-            "description": "Evento actualizado"
+            "description": "Venta anulada correctamente",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Venta anulada correctamente" }
+              }
+            }
+          },
+          "400": {
+            "description": "Error al anular",
+            "content": {
+              "application/json": {
+                "example": { "error": "Mensaje de error del servicio" }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "example": { "error": "Descripción del error interno" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/movimientos": {
+      "get": {
+        "tags": ["Movimientos"],
+        "summary": "Listar movimientos",
+        "responses": {
+          "200": {
+            "description": "Lista de movimientos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id":          { "type": "integer" },
+                      "descripcion": { "type": "string" },
+                      "fecha":       { "type": "string", "format": "date" },
+                      "cantidad":    { "type": "number" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/categorias": {
+      "get": {
+        "tags": ["Categorias"],
+        "summary": "Listar categorias",
+        "responses": {
+          "200": {
+            "description": "Lista de categorias",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id":          { "type": "integer" },
+                      "nombre":      { "type": "string" },
+                      "descripcion": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/historial-pedidos": {
+      "get": {
+        "tags": ["Historial Pedidos"],
+        "summary": "Listar historial de pedidos",
+        "responses": {
+          "200": {
+            "description": "Lista de historial de pedidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id":     { "type": "integer" },
+                      "fecha":  { "type": "string", "format": "date" },
+                      "estado": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/roles": {
+      "get": {
+        "tags": ["Roles"],
+        "summary": "Listar roles",
+        "responses": {
+          "200": {
+            "description": "Lista de roles",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id":     { "type": "integer" },
+                      "nombre": { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/pagos": {
+      "get": {
+        "tags": ["Pagos"],
+        "summary": "Listar pagos",
+        "responses": {
+          "200": {
+            "description": "Lista de pagos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "pagId":      { "type": "integer" },
+                      "pagVenIdFk": { "type": "integer" },
+                      "pagMon":     { "type": "number" },
+                      "pagMetPag":  { "type": "string" },
+                      "pagEst":     { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
           }
         }
       },
-      "delete": {
-        "tags": ["Eventos"],
-        "summary": "Eliminar evento",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
+      "post": {
+        "tags": ["Pagos"],
+        "summary": "Registrar pago",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["pagId", "pagVenIdFk", "pagMon", "pagMetPag", "pagEst"],
+                "properties": {
+                  "pagId":      { "type": "integer", "example": 1,          "description": "ID del pago (requerido)" },
+                  "pagVenIdFk": { "type": "integer", "example": 5,          "description": "ID de la venta asociada (requerido)" },
+                  "pagMon":     { "type": "number",  "example": 150000,     "description": "Monto del pago (requerido)" },
+                  "pagMetPag":  { "type": "string",  "example": "EFECTIVO", "description": "Método de pago (requerido)" },
+                  "pagEst":     { "type": "string",  "example": "PAGADO",   "description": "Estado del pago (requerido)" }
+                }
+              }
+            }
           }
-        ],
+        },
+        "responses": {
+          "201": {
+            "description": "Pago registrado correctamente",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Pago registrado", "pagId": 1 }
+              }
+            }
+          },
+          "400": {
+            "description": "Campo obligatorio faltante",
+            "content": {
+              "application/json": {
+                "example": { "error": "El campo 'pagMon' es obligatorio" }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto al registrar el pago",
+            "content": {
+              "application/json": {
+                "example": { "error": "Descripción del error del servicio" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/facturas": {
+      "get": {
+        "tags": ["Facturas"],
+        "summary": "Listar facturas",
         "responses": {
           "200": {
-            "description": "Evento eliminado"
+            "description": "Lista de facturas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "facId":      { "type": "integer" },
+                      "facTotal":   { "type": "number" },
+                      "numfactura": { "type": "string" },
+                      "facFecEmi":  { "type": "string", "format": "date" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Facturas"],
+        "summary": "Crear factura",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["facId", "facTotal", "numfactura"],
+                "properties": {
+                  "facId":      { "type": "integer", "example": 1,          "description": "ID de la factura (requerido)" },
+                  "facTotal":   { "type": "number",  "example": 250000,     "description": "Total de la factura (requerido)" },
+                  "numfactura": { "type": "string",  "example": "FAC-0001", "description": "Número de factura (requerido)" },
+                  "facFecEmi":  { "type": "string",  "format": "date", "example": "2025-04-23", "description": "Fecha de emisión (opcional)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Factura creada correctamente",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Factura creada correctamente" }
+              }
+            }
+          },
+          "400": {
+            "description": "Error de validación",
+            "content": {
+              "application/json": {
+                "examples": {
+                  "sin_body":         { "value": { "error": "Se requiere un body en formato JSON" } },
+                  "campos_faltantes": { "value": { "error": "Faltan campos obligatorios", "faltantes": ["facTotal"] } },
+                  "error_servicio":   { "value": { "error": "Descripción del error del servicio" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/materiales": {
+      "get": {
+        "tags": ["Materiales"],
+        "summary": "Listar materiales",
+        "responses": {
+          "200": {
+            "description": "Lista de materiales",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "matId":       { "type": "integer" },
+                      "matNom":      { "type": "string" },
+                      "matEst":      { "type": "string" },
+                      "matUmbMin":   { "type": "number" },
+                      "matCantDisp": { "type": "number" },
+                      "matPreUni":   { "type": "number" },
+                      "matTipMat":   { "type": "string" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Materiales"],
+        "summary": "Crear material",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["matNom", "matEst", "matUmbMin", "matCantDisp", "matPreUni", "matTipMat"],
+                "properties": {
+                  "matNom":      { "type": "string", "example": "Cemento",      "description": "Nombre del material (requerido)" },
+                  "matEst":      { "type": "string", "example": "ACTIVO",       "description": "Estado del material (requerido)" },
+                  "matUmbMin":   { "type": "number", "example": 10,             "description": "Umbral mínimo de stock (requerido)" },
+                  "matCantDisp": { "type": "number", "example": 100,            "description": "Cantidad disponible (requerido)" },
+                  "matPreUni":   { "type": "number", "example": 25000,          "description": "Precio unitario (requerido)" },
+                  "matTipMat":   { "type": "string", "example": "CONSTRUCCION", "description": "Tipo de material (requerido)" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Material creado correctamente",
+            "content": {
+              "application/json": {
+                "example": { "mensaje": "Material creado", "matId": 1 }
+              }
+            }
+          },
+          "400": {
+            "description": "Campo obligatorio faltante",
+            "content": {
+              "application/json": {
+                "example": { "error": "El campo 'matNom' es obligatorio" }
+              }
+            }
+          },
+          "409": {
+            "description": "Conflicto al crear el material",
+            "content": {
+              "application/json": {
+                "example": { "error": "Descripción del error del servicio" }
+              }
+            }
           }
         }
       }
