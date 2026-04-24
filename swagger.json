@@ -62,79 +62,89 @@
   ],
   "paths": {
     "/usuario": {
-      "get": {
-        "tags": [
-          "Usuario"
-        ],
-        "summary": "Listar usuarios",
-        "responses": {
-          "200": {
-            "description": "Lista de usuarios"
-          }
-        }
-      },
-      "post": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Crear usuario",
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
+  "get": {
+    "tags": ["Usuarios"],
+    "summary": "Listar usuarios",
+    "responses": {
+      "200": {
+        "description": "Lista de usuarios",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
                 "type": "object",
                 "properties": {
-                  "nombre": {
-                    "type": "string"
-                  },
-                  "genero": {
-                    "type": "string"
-                  },
-                  "frm": {
-                    "type": "string"
-                  },
-                  "numdoc": {
-                    "type": "string"
-                  }
+                  "usuId":       { "type": "string" },
+                  "usuNom":      { "type": "string" },
+                  "usuApe":      { "type": "string" },
+                  "usuTel":      { "type": "string" },
+                  "usuCor":      { "type": "string" },
+                  "usuPassHash": { "type": "string" },
+                  "usuRol":      { "type": "string" }
                 }
               }
             }
           }
-        },
-        "responses": {
-          "201": {
-            "description": "Usuario creado"
-          }
         }
       }
-    },
-    "/usuarios/{id}": {
-      "get": {
-        "tags": [
-          "Usuarios"
-        ],
-        "summary": "Obtener usuario por ID",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
+    }
+  },
+  "post": {
+    "tags": ["Usuarios"],
+    "summary": "Crear usuario",
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "required": ["usuId", "usuNom", "usuApe", "usuTel", "usuCor", "usuPassHash", "usuRol"],
+            "properties": {
+              "usuId":       { "type": "string", "example": "U001",            "description": "ID único del usuario (requerido)" },
+              "usuNom":      { "type": "string", "example": "Juan",            "description": "Nombre del usuario (requerido)" },
+              "usuApe":      { "type": "string", "example": "Pérez",           "description": "Apellido del usuario (requerido)" },
+              "usuTel":      { "type": "string", "example": "3001234567",      "description": "Teléfono del usuario (requerido)" },
+              "usuCor":      { "type": "string", "example": "juan@correo.com", "description": "Correo electrónico (requerido)" },
+              "usuPassHash": { "type": "string", "example": "miPassword123",   "description": "Contraseña del usuario (requerido)" },
+              "usuRol":      { "type": "string", "example": "ADMIN",           "description": "Rol del usuario (requerido)" }
             }
           }
-        ],
-        "responses": {
-          "200": {
-            "description": "Usuario encontrado"
-          },
-          "404": {
-            "description": "Usuario no encontrado"
-          }
         }
       }
     },
+    "responses": {
+      "200": {
+        "description": "Usuario creado correctamente",
+        "content": {
+          "application/json": {
+            "example": { "mensaje": "Usuario creado correctamente" }
+          }
+        }
+      },
+      "400": {
+        "description": "Error de validación",
+        "content": {
+          "application/json": {
+            "examples": {
+              "sin_datos":        { "value": { "mensaje": "No se enviaron datos" } },
+              "campos_faltantes": { "value": { "mensaje": "Campos requeridos faltantes", "faltantes": ["usuNom"] } }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Error interno",
+        "content": {
+          "application/json": {
+            "example": { "mensaje": "Error al crear usuario" }
+          }
+        }
+      }
+    }
+  }
+},
+
     "/proveedores": {
       "get": {
         "tags": [
@@ -564,29 +574,10 @@
             "content": {
               "application/json": {
                 "examples": {
-                  "sin_body": {
-                    "value": {
-                      "error": "Se requiere un body en formato JSON"
-                    }
-                  },
-                  "campos_faltantes": {
-                    "value": {
-                      "error": "Faltan campos obligatorios",
-                      "faltantes": [
-                        "id_cliente"
-                      ]
-                    }
-                  },
-                  "estado_invalido": {
-                    "value": {
-                      "error": "estado_pago inválido. Valores permitidos: ['PAGADO', 'ANULADO', 'ADELANTADO', 'SIN PAGAR']"
-                    }
-                  },
-                  "error_servicio": {
-                    "value": {
-                      "error": "Mensaje de error del servicio"
-                    }
-                  }
+                  "sin_body":         { "value": { "error": "Se requiere un body en formato JSON" } },
+                  "campos_faltantes": { "value": { "error": "Faltan campos obligatorios", "faltantes": ["id_cliente"] } },
+                  "estado_invalido":  { "value": { "error": "estado_pago inválido. Valores permitidos: ['PAGADO', 'ANULADO', 'ADELANTADO', 'SIN PAGAR']" } },
+                  "error_servicio":   { "value": { "error": "Mensaje de error del servicio" } }
                 }
               }
             }
@@ -595,67 +586,15 @@
             "description": "Error interno",
             "content": {
               "application/json": {
-                "example": {
-                  "error": "Descripción del error interno"
-                }
+                "example": { "error": "Descripción del error interno" }
               }
             }
           }
         }
       }
     },
-    "/ventas/{id}": {
-      "patch": {
-        "tags": [
-          "Ventas"
-        ],
-        "summary": "Anular venta",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer"
-            },
-            "example": 1,
-            "description": "ID de la venta a anular"
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Venta anulada correctamente",
-            "content": {
-              "application/json": {
-                "example": {
-                  "mensaje": "Venta anulada correctamente"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Error al anular",
-            "content": {
-              "application/json": {
-                "example": {
-                  "error": "Mensaje de error del servicio"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Error interno",
-            "content": {
-              "application/json": {
-                "example": {
-                  "error": "Descripción del error interno"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
+
+    
     "/movimientos": {
       "get": {
         "tags": [
@@ -1164,212 +1103,13 @@
             "description": "Conflicto al crear el material",
             "content": {
               "application/json": {
-                "example": {
-                  "error": "Descripción del error del servicio"
-                }
+                "example": { "error": "Descripción del error del servicio" }
               }
             }
-          }
-        }
-      }
-    },
-      "/pedidos/": {
-      "get": {
-        "summary": "Listar todos los pedidos",
-        "tags": ["Pedidos"],
-        "responses": {
-          "200": {
-            "description": "Lista de pedidos obtenida correctamente"
-          }
-        }
-      },
-      "post": {
-        "summary": "Registrar un nuevo pedido",
-        "tags": ["Pedidos"],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": [
-                  "id",
-                  "id_cliente",
-                  "tipo_pedido",
-                  "fecha_estimada",
-                  "dias_recordatorio",
-                  "precio_total_estimado"
-                ],
-                "properties": {
-                  "id": { "type": "string" },
-                  "id_cliente": { "type": "string" },
-                  "tipo_pedido": { "type": "string" },
-                  "fecha_estimada": { "type": "string", "format": "date" },
-                  "dias_recordatorio": { "type": "integer" },
-                  "precio_total_estimado": { "type": "number" },
-                  "observacion": { "type": "string" }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Pedido registrado correctamente"
-          }
-        }
-      }
-    },
-    "/pedidos/{id}": {
-      "get": {
-        "summary": "Obtener un pedido por ID",
-        "tags": ["Pedidos"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Pedido encontrado"
-          }
-        }
-      }
-    },
-    "/pedidos/{id}/detalles": {
-      "post": {
-        "summary": "Registrar detalle de pedido",
-        "tags": ["Pedidos"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-         "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["id", "cantidad", "precio", "nombre"],
-                "properties": {
-                  "id": { "type": "string" },
-                  "cantidad": { "type": "integer" },
-                  "precio": { "type": "number" },
-                  "nombre": { "type": "string" },
-                  "tipo_prenda": { "type": "string" },
-                  "talla": { "type": "string" },
-                  "observacion": { "type": "string" },
-                  "medidas": {
-                    "type": "array",
-                    "items": {
-                      "type": "object",
-                      "properties": {
-                        "id_medida": { "type": "string" },
-                        "valor": { "type": "number" }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Detalle registrado"
-          }
-        }
-      }
-    },
-    "/pedidos/{pedido_id}/fotos": {
-      "post": {
-        "summary": "Registrar foto de pedido",
-        "tags": ["Pedidos"],
-        "parameters": [
-          {
-            "name": "pedido_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-       "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["url"],
-                "properties": {
-                  "url": { "type": "string", "format": "uri" }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Foto registrada"
-          }
-        }
-      }
-    },
-    "/pedidos/{pedido_id}/detalles/{id_detalle}/medidas": {
-      "post": {
-        "summary": "Registrar medidas de un detalle",
-        "tags": ["Pedidos"],
-        "parameters": [
-          {
-            "name": "pedido_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "id_detalle",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "required": ["id_medida", "valor"],
-                "properties": {
-                  "id_medida": { "type": "number" },
-                  "valor": { "type": "number" }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "201": {
-            "description": "Medidas registradas"
           }
         }
       }
     }
+
   }
 }
