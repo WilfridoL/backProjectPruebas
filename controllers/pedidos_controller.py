@@ -13,7 +13,7 @@ def cntListarPedidoPorId(id):
 
 def cntRegistrarPedido():
     data = request.json
-
+    # print(data)
     #  Validar JSON
     if not data:
         return jsonify({"error": "Se requiere un cuerpo JSON"}), 400

@@ -18,6 +18,7 @@ def cnRegistrar_cliente():
     cliApe = payload["cliApe"].strip()
     cliTel = payload["cliTel"].strip()
     usuIdFk = payload["usuIdFk"]
+    cliCorr = payload["cliCorr"]
 
     if not isinstance(cliId, int) or cliId <= 0:
         return jsonify({"mensaje": "cliId debe ser un entero positivo"}), 400
@@ -49,7 +50,8 @@ def cnRegistrar_cliente():
         cliNom,
         cliApe,
         cliTel,
-        usuIdFk
+        usuIdFk,
+        cliCorr
     )
 
     if success:

@@ -12,12 +12,8 @@
   ],
   "tags": [
     {
-      "name": "Usuario",
+      "name": "Usuarios",
       "description": "Gestión de aprendices"
-    },
-    {
-      "name": "Eventos",
-      "description": "Gestión de eventos"
     },
     {
       "name": "Proveedores",
@@ -61,7 +57,7 @@
     }
   ],
   "paths": {
-    "/usuario": {
+    "/usuarios": {
   "get": {
     "tags": ["Usuarios"],
     "summary": "Listar usuarios",
@@ -101,7 +97,7 @@
             "type": "object",
             "required": ["usuId", "usuNom", "usuApe", "usuTel", "usuCor", "usuPassHash", "usuRol"],
             "properties": {
-              "usuId":       { "type": "string", "example": "U001",            "description": "ID único del usuario (requerido)" },
+              "usuId":       { "type": "string", "example": "143125434566",    "description": "ID único del usuario (requerido)" },
               "usuNom":      { "type": "string", "example": "Juan",            "description": "Nombre del usuario (requerido)" },
               "usuApe":      { "type": "string", "example": "Pérez",           "description": "Apellido del usuario (requerido)" },
               "usuTel":      { "type": "string", "example": "3001234567",      "description": "Teléfono del usuario (requerido)" },

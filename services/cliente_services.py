@@ -34,7 +34,7 @@ def listado_cliente():
     return listado_clientes()
 
 
-def agregar_cliente(cliId, cliNom, cliApe, cliTel, usuId):
+def agregar_cliente(cliId, cliNom, cliApe, cliTel, usuId, cliCor):
     try:
         # Validar que el ID no esté vacío
         if not cliId or not str(cliId).strip():
@@ -66,8 +66,8 @@ def agregar_cliente(cliId, cliNom, cliApe, cliTel, usuId):
             raise ValueError(f"Ya existe un cliente con ID {cliId}")
 
         sql = """
-        INSERT INTO cliente (cliId, cliNom, cliApe, cliTel, usuIdFk, cliEst)
-        VALUES (%s, %s, %s, %s, %s, %s)
+        INSERT INTO cliente (cliId, cliNom, cliApe, cliTel, usuIdFk, cliEst, cliCorr)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
         valores = (
             cliId,
@@ -75,7 +75,8 @@ def agregar_cliente(cliId, cliNom, cliApe, cliTel, usuId):
             cliApe,
             cliTel,
             usuId,
-            1
+            1,
+            cliCor
         )
         c.execute(sql, valores)
         current_app.mysql.connection.commit()

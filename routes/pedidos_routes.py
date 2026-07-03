@@ -8,6 +8,7 @@ pedidos_bp = Blueprint("pedidos", __name__)
 
 # Metodos para ruta /pedidos
 @pedidos_bp.route('/')
+@pedidos_bp.route('')
 def listado():
     return cntListadopedido()
 
@@ -16,6 +17,7 @@ def listarPedido(id):
     return cntListarPedidoPorId(id)
 
 @pedidos_bp.route('/', methods=['POST'])
+@pedidos_bp.route('', methods=['POST'])
 def reg():
     return cntRegistrarPedido()
 
