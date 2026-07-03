@@ -10,6 +10,7 @@ def cnRegistrar_cliente():
     required = ["cliId", "cliNom", "cliApe", "cliTel", "usuIdFk"]
     missing = [f for f in required if f not in payload]
     if missing:
+        print(missing)
         return jsonify({"mensaje": "Campos faltantes", "faltantes": missing}), 400
 
     # ── Validaciones ──────────────────────────────────────────────
@@ -53,7 +54,7 @@ def cnRegistrar_cliente():
         usuIdFk,
         cliCorr
     )
-
+    print(success)
     if success:
         return jsonify({"mensaje": "Cliente registrado con éxito"}), 201
     else:

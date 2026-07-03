@@ -64,6 +64,10 @@ def agregar_cliente(cliId, cliNom, cliApe, cliTel, usuId, cliCor):
         c.execute("SELECT cliId FROM cliente WHERE cliId = %s", (cliId,))
         if c.fetchone():
             raise ValueError(f"Ya existe un cliente con ID {cliId}")
+        
+        c.execute("SELECT cliCorr FROM cliente WHERE cliCorr = %s", (cliCor,))
+        if c.fetchone():
+            raise ValueError(f"Ya existe un cliente con ese correo {cliCor}")
 
         sql = """
         INSERT INTO cliente (cliId, cliNom, cliApe, cliTel, usuIdFk, cliEst, cliCorr)
